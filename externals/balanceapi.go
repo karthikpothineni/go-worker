@@ -41,7 +41,7 @@ func NewBalanceRequestHandler(log *logrus.Entry) *BalanceRequestHandler {
 func (br *BalanceRequestHandler) BillUser(billEvent models.BillingEvent) ([]byte, bool) {
 
 	// prepare url and body
-	path := fmt.Sprintf("Billing/%s", billEvent.UserID)
+	path := fmt.Sprintf("Billing/%d", billEvent.UserID)
 	data := make(map[string]interface{})
 	data["product_id"] = billEvent.ProductID
 	data["call_id"] = billEvent.CallID
