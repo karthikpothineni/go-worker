@@ -21,7 +21,7 @@
 
 [balance_service]
     url = "https://balance-svc-dev.com"
-    username = "vala***"
-    password = "vala***"
+    username = "test"
+    password = "test"
     timeout = 1
     retry_count = 2

@@ -7,6 +7,7 @@ import (
 
 // closeChan - close channel for worker pool
 var closeChan chan bool
+
 // wg - wait group for worker pool
 var wg sync.WaitGroup
 

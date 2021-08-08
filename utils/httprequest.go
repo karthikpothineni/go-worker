@@ -21,8 +21,8 @@ const (
 	defaultKeepAliveTime = 30 * time.Second
 	// default idle connection timeout
 	defaultIdleConnectionTimeout = 30 * time.Second
-	// default timeout for the default transport in milliseconds
-	defaultTimeout = 10000
+	// default timeout for the default transport in seconds
+	defaultTimeout = 10
 	// json request type
 	jsonRequestType = "json"
 )
@@ -85,14 +85,14 @@ type RequestSpecifications struct {
 // RequestHandler - holds request handler information
 type RequestHandler struct {
 	appName string
-	handler *gorequest.SuperAgent
+	Handler *gorequest.SuperAgent
 }
 
 // NewRequestHandler  - return RequestHandler object
 func NewRequestHandler(app string) *RequestHandler {
 	return &RequestHandler{
 		appName: app,
-		handler: gorequest.New(),
+		Handler: gorequest.New(),
 	}
 }
 
@@ -157,7 +157,7 @@ func processResponse(response gorequest.Response, err []error, statusCode *int, 
 		//investigates timeout error
 		if checkTimeout(err) {
 			*statusCode = http.StatusRequestTimeout
-			errMsg = fmt.Sprintf("%v timeout encountered with request timeout set to %v milliseconds", errMsg, specs.Timeout)
+			errMsg = fmt.Sprintf("%v timeout encountered with request timeout set to %v seconds", errMsg, specs.Timeout)
 		}
 		errMsg = fmt.Sprintf("%v with headers %+v and params %+v.", errMsg, specs.Headers, specs.Params)
 		errString := GetErrorString(err)
@@ -176,19 +176,18 @@ func processResponse(response gorequest.Response, err []error, statusCode *int, 
 // RetryCondition      : ExactResponseCodeMatch only active if RetryCount > 0
 // RequestType         : json
 func (r *RequestHandler) prepareRequest(specs *RequestSpecifications, logFields map[string]interface{}) *gorequest.SuperAgent {
-	handler := gorequest.New()
 	// set transport
 	timeout := GetValue(specs.Timeout, defaultTimeout).(int)
 	logFields["http_timeout"] = timeout
-	handler.Transport = DefaultTransport
-	handler.Client.Timeout = time.Duration(timeout) * time.Millisecond
+	r.Handler.Transport = DefaultTransport
+	r.Handler.Client.Timeout = time.Duration(timeout) * time.Second
 
 	if specs.RetryCondition == nil {
 		specs.RetryCondition = ExactResponseCodeMatch
 	}
 	// specify authorization for request
 	if specs.UseAuth {
-		handler = handler.SetBasicAuth(specs.Username, specs.Password)
+		r.Handler = r.Handler.SetBasicAuth(specs.Username, specs.Password)
 		logFields["http_require_auth"] = specs.UseAuth
 	}
 	// checks if request retry is enabled
@@ -206,9 +205,9 @@ func (r *RequestHandler) prepareRequest(specs *RequestSpecifications, logFields 
 		specs.HTTPMethod = http.MethodGet
 	}
 	logFields["http_method"] = specs.HTTPMethod
-	handler = addHeadersAndBody(specs, handler)
+	r.Handler = addHeadersAndBody(specs, r.Handler)
 	specs.Log.WithFields(logFields).Info("prepared and sending http request")
-	return handler
+	return r.Handler
 }
 
 // addHeadersAndBody - adds headers and body to request handler
