@@ -1,0 +1,27 @@
+[worker]
+    count = 10
+    max_events = 10
+    wait_time = 2
+
+[sqs]
+    region = "us-east-1"
+    url = "https://sqs.us-east-1.amazonaws.com/8888888888/billing-events"
+    retry_count = 3
+
+[mysql]
+    db_host = "localhost"
+    db_port = 3306
+    db_username = "root"
+    db_password = ""
+    db_name = "dpv_test"
+    db_type = "mysql"
+    pool_size = 10
+    conn_life_time = 5
+    connect_timeout = 2
+
+[balance_service]
+    url = "https://balance-svc-dev.com"
+    username = "vala***"
+    password = "vala***"
+    timeout = 1
+    retry_count = 2
