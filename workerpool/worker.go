@@ -83,7 +83,7 @@ func (worker *Worker) run() {
 	// catch panics
 	defer func() {
 		if err := recover(); err != nil {
-			worker.Log.WithField("error", err).Error("recovering worker after panic")
+			worker.Log.WithField("error", err).Error("Recovering worker after panic")
 		}
 	}()
 
