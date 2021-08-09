@@ -15,7 +15,7 @@ import (
 
 var responseBody = `{"call_id": "e21b0dda-6566-402a-8f8c-0657e5b87eeb", "charge_amount": 1.2}`
 
-// TestPositiveBillUser - test a successful response
+// TestPositiveBillUser - test a successful api response
 func TestPositiveBillUser(t *testing.T) {
 
 	check := assert.New(t)
@@ -47,7 +47,7 @@ func TestPositiveBillUser(t *testing.T) {
 	check.Equal(1, info["POST https://balance-svc-dev.com/Billing/1"])
 }
 
-// TestNegativeBillUser - test a failure response
+// TestNegativeBillUser - test a failure api response
 func TestNegativeBillUser(t *testing.T) {
 
 	check := assert.New(t)
