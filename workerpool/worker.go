@@ -3,9 +3,11 @@ package workerpool
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
+	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
 	"github.com/sirupsen/logrus"
 
 	"go-worker/config"
@@ -19,7 +21,7 @@ import (
 // Worker - holds worker related information
 type Worker struct {
 	workerId              int
-	SQSClient             *sqs.SQS
+	SQSClient             sqsiface.SQSAPI
 	SQSURL                string
 	SQSRetry              int
 	MaxEvents             int64

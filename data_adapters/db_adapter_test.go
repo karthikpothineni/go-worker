@@ -3,7 +3,6 @@ package dataAdapters
 import (
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
@@ -70,9 +69,9 @@ func TestNegativeUpdation(t *testing.T) {
 
 // getBalanceResponse - returns balance response information
 func getBalanceResponse() (balanceResponse models.BalanceResponse) {
-	balanceResponse = models.BalanceResponse {
-		ChargeAmount: "1.2",
-		CallID: "e21b0dda-6566-402a-8f8c-0657e5b87eeb",
+	balanceResponse = models.BalanceResponse{
+		ChargeAmount:       "1.2",
+		CallID:             "e21b0dda-6566-402a-8f8c-0657e5b87eeb",
 		TotalConsumedUnits: 2,
 	}
 	return
