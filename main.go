@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -30,6 +32,13 @@ func main() {
 	if err != nil {
 		logger.Log.Fatalf("Worked pool initiation failed with error: %s", err.Error())
 	}
+
+	// Start pprof apis
+	go func() {
+		if err := http.ListenAndServe("localhost:6000", nil); err != nil {
+			logger.Log.Fatalf("pprof server init failed with error: %s", err.Error())
+		}
+	}()
 
 	<-signalChan
 	// Stop worker pool
