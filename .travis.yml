@@ -3,10 +3,6 @@ language: go
 go:
  - 1.15.x
 
-env:
- global:
-  - GO111MODULE=on
-
 cache:
  directories:
   - "$GOPATH/pkg/mod"
