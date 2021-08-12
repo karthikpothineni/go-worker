@@ -1,4 +1,4 @@
-package dataAdapters
+package dataadapters
 
 import (
 	"fmt"

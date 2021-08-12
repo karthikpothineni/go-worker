@@ -25,3 +25,7 @@
     password = "test"
     timeout = 1
     retry_count = 2
+
+[pprof_server]
+    host = "localhost"
+    port = 6000

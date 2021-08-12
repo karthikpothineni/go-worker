@@ -1,0 +1,63 @@
+linters-settings:
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0
+  gocyclo:
+    min-complexity: 22
+  maligned:
+    suggest-new: true
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  depguard:
+    list-type: blacklist
+    packages:
+      - github.com/sirupsen/logrus
+  misspell:
+    locale: US
+  lll:
+    line-length: 140
+  gocritic:
+    enabled-tags:
+      - performance
+      - style
+      - experimental
+    disabled-checks:
+      - wrapperFunc
+
+linters:
+  disable-all: true
+  enable:
+    - gofmt
+    - errcheck
+    - golint
+    - vet
+    - vetshadow
+    - gocyclo
+
+run:
+  skip-dirs:
+    - vendor*
+  skip-files:
+    - ".*\\.mocks\\.go$"
+  deadline: 10m
+
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+
+# golangci.com configuration
+# https://github.com/golangci/golangci/wiki/Configuration
+service:
+  golangci-lint-version: 1.21.0 # use the fixed version to not introduce new linters unexpectedly
+  prepare:
+    - echo "Add custom commands if needed in the future"

@@ -10,8 +10,8 @@ import (
 
 func TestGenerateUUID(t *testing.T) {
 	check := assert.New(t)
-	uuid1 := GetTransactionId()
-	uuid2 := GetTransactionId()
+	uuid1 := GetTransactionID()
+	uuid2 := GetTransactionID()
 	check.NotEqual(uuid1, uuid2)
 }
 
@@ -50,10 +50,10 @@ func TestGetValue(t *testing.T) {
 	}
 }
 
-func TestGetTransactionId(t *testing.T) {
+func TestGetTransactionID(t *testing.T) {
 	check := assert.New(t)
-	id1 := GetTransactionId()
-	id2 := GetTransactionId()
+	id1 := GetTransactionID()
+	id2 := GetTransactionID()
 	check.NotEqual(id1, id2)
 }
 
@@ -63,7 +63,7 @@ func TestGetErrorString(t *testing.T) {
 		input    string
 		expected string
 	}{
-		{GetErrorString([]error{errors.New("First error"), errors.New("Second error")}), ". First error. Second error"},
+		{GetErrorString([]error{errors.New("first error"), errors.New("second error")}), ". first error. second error"},
 		{GetErrorString(nil), ""},
 	}
 	for _, test := range tests {

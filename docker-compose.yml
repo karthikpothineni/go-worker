@@ -1,0 +1,6 @@
+version: "3.7"
+services:
+  goworker:
+    build: .
+    container_name: go-worker
+    image: goworker

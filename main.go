@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -9,7 +10,7 @@ import (
 	"syscall"
 
 	"go-worker/config"
-	"go-worker/data_adapters"
+	dataAdapters "go-worker/data_adapters"
 	"go-worker/logger"
 	"go-worker/workerpool"
 )
@@ -35,7 +36,8 @@ func main() {
 
 	// Start pprof apis
 	go func() {
-		if err := http.ListenAndServe("localhost:6000", nil); err != nil {
+		addr := fmt.Sprintf("%s:%d", config.GetConfig().GetString("pprof_server.host"), config.GetConfig().GetInt("pprof_server.port"))
+		if err := http.ListenAndServe(addr, nil); err != nil {
 			logger.Log.Fatalf("pprof server init failed with error: %s", err.Error())
 		}
 	}()

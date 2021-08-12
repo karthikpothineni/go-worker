@@ -1,8 +1,9 @@
-package dataAdapters
+package dataadapters
 
 import (
 	"testing"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 

@@ -32,11 +32,11 @@ func spawnWorkers(numWorkers int) []Worker {
 	var workerList []Worker
 	for i := 0; i < numWorkers; i++ {
 		wg.Add(1)
-		workerId := i + 1
-		worker := NewWorker(workerId)
+		workerID := i + 1
+		worker := NewWorker(workerID)
 		worker.Init()
 		workerList = append(workerList, *worker)
-		logger.Log.Infof("Worker %d initialized successfully", workerId)
+		logger.Log.Infof("Worker %d initialized successfully", workerID)
 	}
 	return workerList
 }

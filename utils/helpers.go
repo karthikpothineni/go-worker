@@ -55,8 +55,8 @@ func GetValue(value interface{}, defaultValue interface{}) interface{} {
 	return value
 }
 
-//GetTransactionId - generates a new UUID for a transaction
-func GetTransactionId() string {
+//GetTransactionID - generates a new UUID for a transaction
+func GetTransactionID() string {
 	return uuid.New().String()
 }
 

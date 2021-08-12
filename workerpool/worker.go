@@ -11,7 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"go-worker/config"
-	"go-worker/data_adapters"
+	dataAdapters "go-worker/data_adapters"
 	"go-worker/externals"
 	"go-worker/logger"
 	"go-worker/models"
@@ -20,7 +20,7 @@ import (
 
 // Worker - holds worker related information
 type Worker struct {
-	workerId              int
+	workerID              int
 	SQSClient             sqsiface.SQSAPI
 	SQSURL                string
 	SQSRetry              int
@@ -31,7 +31,7 @@ type Worker struct {
 }
 
 // NewWorker - returns a new object for Worker
-func NewWorker(workerId int) *Worker {
+func NewWorker(workerID int) *Worker {
 	cfg := config.GetConfig()
 
 	region := cfg.GetString("sqs.region")
@@ -44,13 +44,13 @@ func NewWorker(workerId int) *Worker {
 	// new sqs client
 	svc := sqs.New(sess)
 
-	prefix := fmt.Sprintf("WorkerID:%d", workerId)
-	transaction := fmt.Sprintf("%v", utils.GetTransactionId())
+	prefix := fmt.Sprintf("WorkerID:%d", workerID)
+	transaction := fmt.Sprintf("%v", utils.GetTransactionID())
 	log := logger.Log.WithFields(logrus.Fields{"prefix": prefix, "transaction": transaction})
 	balanceRequesthandler := externals.NewBalanceRequestHandler(log)
 
 	worker := &Worker{
-		workerId:              workerId,
+		workerID:              workerID,
 		SQSClient:             svc,
 		SQSURL:                cfg.GetString("sqs.url"),
 		SQSRetry:              cfg.GetInt("sqs.retry_count"),
@@ -200,5 +200,5 @@ func (worker *Worker) deleteSQSMessages(requestIDList []*sqs.DeleteMessageBatchR
 
 //Close uninitializes a worker
 func (worker *Worker) Close() {
-	worker.Log.Infof("Successfully closed worker %d", worker.workerId)
+	worker.Log.Infof("Successfully closed worker %d", worker.workerID)
 }
