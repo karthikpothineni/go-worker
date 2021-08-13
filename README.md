@@ -19,7 +19,7 @@ Docker compose internally runs the linter, tests before building the application
 ### Run Linter
 ```golangci-lint run -v -c golangci.yml```
 ### Run Tests
-```go test ./... -cover```
+```go test -v -cover ./...```
 ### Pprof
 This application internally have pprof API's registered. Following is an example of trace profiling using pprof API's
 
